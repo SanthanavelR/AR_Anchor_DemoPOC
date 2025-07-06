@@ -14,6 +14,10 @@ public class SimpleObjectSpawner : MonoBehaviour
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private TMP_Text consoleText;
     private List<ARAnchor> placedAnchors = new List<ARAnchor>();
+
+    public GameObject trackedImageObject;
+    public DataHandler dataHandler;
+    public ARAnchor anchor;
     private void Awake()
     {
         if (planeManager == null)
@@ -46,23 +50,61 @@ public class SimpleObjectSpawner : MonoBehaviour
     }
     private void TryPlaceObject(Vector2 touchPosition)
     {
-        List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-        if (raycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
+        anchor = FindObjectOfType<ARAnchor>();
+        if (anchor == null)
         {
-            Pose hitPose = hits[0].pose;
-            ARPlane hitPlane = planeManager.GetPlane(hits[0].trackableId);
+            List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
-            if (hitPlane != null)
+            if (raycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
             {
-                ARAnchor anchor = anchorManager.AttachAnchor(hitPlane, hitPose);
-                if (anchor != null)
+                Pose hitPose = hits[0].pose;
+                ARPlane hitPlane = planeManager.GetPlane(hits[0].trackableId);
+
+                if (hitPlane != null)
                 {
-                    GameObject spawned = Instantiate(objectPrefab, anchor.transform.position, anchor.transform.rotation);
-                    spawned.transform.SetParent(anchor.transform);
-                    placedAnchors.Add(anchor);
+                    if (trackedImageObject == null)
+                        trackedImageObject = FindObjectOfType<ARTrackedImage>().gameObject;
+                    anchor = anchorManager.AttachAnchor(hitPlane, hitPose);
+                    anchor.transform.parent = trackedImageObject.transform;
+                    if (anchor != null)
+                    {
+                        GameObject spawned = Instantiate(objectPrefab, anchor.transform.position, anchor.transform.rotation);
+                        spawned.transform.SetParent(anchor.transform);
+                        placedAnchors.Add(anchor);
+                    }
                 }
             }
         }
+       
+    }
+
+    [System.Serializable]
+    public class AnnotationData
+    {
+        public Vector3 localPosition;
+        public Quaternion localRotation;
+    }
+
+    public AnnotationData CalculateRelativeData()
+    {
+        GameObject cube = anchor.gameObject;
+
+        if (trackedImageObject == null)
+            trackedImageObject = FindObjectOfType<ARTrackedImage>().gameObject;
+        if (cube == null || trackedImageObject == null) return null;
+
+        Vector3 localPos = anchor.transform.localPosition;
+        Quaternion localRot = anchor.transform.localRotation;
+
+        return new AnnotationData
+        {
+            localPosition = localPos,
+            localRotation = localRot
+        };
+    }
+
+    public void saveAno()
+    {
+        dataHandler.SaveAnnotation(CalculateRelativeData());
     }
 }

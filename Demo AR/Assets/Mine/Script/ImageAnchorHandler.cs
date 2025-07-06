@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class AnnotationData
+public class AnnotationDatas
 {
     public Vector3 localPosition;
     public Quaternion localRotation;
@@ -16,7 +16,7 @@ public class AnnotationData
 public class AnnotationSaveData
 {
     public string imageName;
-    public List<AnnotationData> annotations = new List<AnnotationData>();
+    public List<AnnotationDatas> annotations = new List<AnnotationDatas>();
 }
 
 public class ImageAnchorHandler : MonoBehaviour
@@ -110,7 +110,7 @@ public class ImageAnchorHandler : MonoBehaviour
 
             foreach (var obj in objs)
             {
-                data.annotations.Add(new AnnotationData
+                data.annotations.Add(new AnnotationDatas
                 {
                     localPosition = obj.transform.localPosition,
                     localRotation = obj.transform.localRotation
