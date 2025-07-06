@@ -304,9 +304,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 820536820}
-        m_TargetAssemblyTypeName: ARAnchorPlacementManager, Assembly-CSharp
-        m_MethodName: LoadAnchorData
+      - m_Target: {fileID: 820536819}
+        m_TargetAssemblyTypeName: TrackedImageAnchorHandler, Assembly-CSharp
+        m_MethodName: TryLoadAnchorRelativeToImage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820536814}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 361179e6b8d12894f867363654a6e25c, type: 3}
   m_Name: 
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820536814}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc10cdac84468a9478f473f6b793afb7, type: 3}
   m_Name: 
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519093445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
   m_Name: 
@@ -1808,9 +1808,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 820536820}
-        m_TargetAssemblyTypeName: ARAnchorPlacementManager, Assembly-CSharp
-        m_MethodName: SaveAnchorData
+      - m_Target: {fileID: 820536819}
+        m_TargetAssemblyTypeName: TrackedImageAnchorHandler, Assembly-CSharp
+        m_MethodName: SaveAnchorRelativeToImage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
